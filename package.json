@@ -1,0 +1,39 @@
+{
+  "name": "enqueuer-plugin-shell",
+  "version": "1.0.0",
+  "description": "Enqueuer shell plugin",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "clean": "rm -rf dist",
+    "all": "npm run clean && npm run lint && npm run build",
+    "lint": "node_modules/.bin/tslint --project tsconfig.json",
+    "prepublishOnly": "npm run all",
+    "build": "tsc"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/enqueuer-land/enqueuer-plugin-shell.git"
+  },
+  "keywords": [
+    "enqueuer",
+    "nqr",
+    "shell",
+    "plugin"
+  ],
+  "author": "Virgs",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/enqueuer-land/enqueuer-plugin-shell/issues"
+  },
+  "homepage": "https://github.com/enqueuer-land/enqueuer-plugin-shell#readme",
+  "devDependencies": {
+    "@types/node": "^11.13.13",
+    "ts-node": "^8.2.0",
+    "tslint": "^5.17.0",
+    "typescript": "^3.5.1"
+  },
+  "dependencies": {
+    "enqueuer": "^4.7.3"
+  }
+}

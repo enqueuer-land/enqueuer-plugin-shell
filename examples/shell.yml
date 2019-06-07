@@ -1,0 +1,19 @@
+name: creating exchange
+publishers:
+    -   type: shell #https://nodejs.org/api/child_process.html#child_process_child_process_exec_command_options_callback
+        command: |-
+            echo shell works
+            rm nonExistentFile
+        options:
+            maxBuffer: 1024
+            killSignal: 31
+            timeout: 10000
+        onMessageReceived:
+            assertions:
+                - expect: stdout
+                  toBeEqualTo: `shell works\n`
+                - expect: stderr
+                  toBeEqualTo: `rm: nonExistentFile: No such file or directory\n`
+                - expect: code
+                  toBeEqualTo: 1
+                - expectToBeDefined: Error
