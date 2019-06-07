@@ -4,7 +4,7 @@ import childProcess from 'child_process';
 
 const execPromisified = util.promisify(childProcess.exec);
 
-export class ShellPublisher extends Publisher {
+export class ExecPublisher extends Publisher {
     private readonly command: string;
     private readonly options: any;
 
@@ -25,9 +25,8 @@ export class ShellPublisher extends Publisher {
 }
 
 export function entryPoint(mainInstance: MainInstance): void {
-    const shell = new PublisherProtocol('shell',
-        (publisherModel: InputPublisherModel) => new ShellPublisher(publisherModel),
-        ['stdout', 'stderr', 'cmd', 'signal', 'code', 'killed', 'Error'])
-        .addAlternativeName('bash') as PublisherProtocol;
-    mainInstance.protocolManager.addProtocol(shell);
+    const exec = new PublisherProtocol('exec',
+        (publisherModel: InputPublisherModel) => new ExecPublisher(publisherModel),
+        ['stdout', 'stderr', 'cmd', 'signal', 'code', 'killed', 'Error']) as PublisherProtocol;
+    mainInstance.protocolManager.addProtocol(exec);
 }

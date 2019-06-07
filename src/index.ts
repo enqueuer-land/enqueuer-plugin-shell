@@ -1,6 +1,8 @@
-import * as publisher from './shell-publisher';
+import * as exec from './exec-publisher';
+import * as spawn from './spawn-publisher';
 import {MainInstance} from 'enqueuer';
 
 export function entryPoint(mainInstance: MainInstance): void {
-    publisher.entryPoint(mainInstance);
+    exec.entryPoint(mainInstance);
+    spawn.entryPoint(mainInstance);
 }

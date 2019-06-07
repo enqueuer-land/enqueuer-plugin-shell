@@ -19,6 +19,9 @@
     "enqueuer",
     "nqr",
     "shell",
+    "exec",
+    "spawn",
+    "fork",
     "plugin"
   ],
   "author": "Virgs",
