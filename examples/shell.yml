@@ -6,7 +6,7 @@
                 - /usr
             options:
                 detached: true
-            onMessageReceived:
+            onChildSpawned:
                 assertions:
                     -   expect: spawnargs
                         toBeEqualTo: [ls,-lh,/usr]
@@ -22,7 +22,7 @@
                 maxBuffer: 1024
                 killSignal: 31
                 timeout: 10000
-            onMessageReceived:
+            onCommandExecuted:
                 assertions:
                     -   expect: stdout
                         toBeEqualTo: `exec works\n`

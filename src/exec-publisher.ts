@@ -14,11 +14,11 @@ export class ExecPublisher extends Publisher {
         this.options = publisher.options || {};
     }
 
-    public async publish(): Promise<void> {
+    public async publish(): Promise<any> {
         try {
-            this.messageReceived = await execPromisified(this.command, this.options);
+            this.executeHookEvent('onCommandExecuted', await execPromisified(this.command, this.options));
         } catch (err) {
-            this.messageReceived = err;
+            this.executeHookEvent('onCommandExecuted', err);
         }
     }
 
@@ -27,6 +27,6 @@ export class ExecPublisher extends Publisher {
 export function entryPoint(mainInstance: MainInstance): void {
     const exec = new PublisherProtocol('exec',
         (publisherModel: InputPublisherModel) => new ExecPublisher(publisherModel),
-        ['stdout', 'stderr', 'cmd', 'signal', 'code', 'killed', 'Error']) as PublisherProtocol;
+        {onCommandExecuted: ['stdout', 'stderr', 'cmd', 'signal', 'code', 'killed', 'Error']}) as PublisherProtocol;
     mainInstance.protocolManager.addProtocol(exec);
 }

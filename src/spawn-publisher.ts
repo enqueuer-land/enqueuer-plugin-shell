@@ -1,5 +1,4 @@
-import {Publisher, InputPublisherModel, MainInstance, PublisherProtocol} from 'enqueuer';
-import util from 'util';
+import {InputPublisherModel, MainInstance, Publisher, PublisherProtocol} from 'enqueuer';
 import {spawn} from 'child_process';
 
 export class SpawnPublisher extends Publisher {
@@ -16,9 +15,9 @@ export class SpawnPublisher extends Publisher {
 
     public async publish(): Promise<void> {
         try {
-            this.messageReceived = await spawn(this.command, this.args, this.options);
+            this.executeHookEvent('onChildSpawned', await spawn(this.command, this.args, this.options));
         } catch (err) {
-            this.messageReceived = err;
+            this.executeHookEvent('onChildSpawned', err);
         }
     }
 
@@ -27,13 +26,15 @@ export class SpawnPublisher extends Publisher {
 export function entryPoint(mainInstance: MainInstance): void {
     const exec = new PublisherProtocol('spawn',
         (publisherModel: InputPublisherModel) => new SpawnPublisher(publisherModel),
-        [
-            'connected',
-            'signalCode',
-            'exitCode',
-            'killed',
-            'spawnfile',
-            'spawnargs',
-            'pid']) as PublisherProtocol;
+        {
+            onChildSpawned: [
+                'connected',
+                'signalCode',
+                'exitCode',
+                'killed',
+                'spawnfile',
+                'spawnargs',
+                'pid']
+        }) as PublisherProtocol;
     mainInstance.protocolManager.addProtocol(exec);
 }
