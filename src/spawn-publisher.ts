@@ -27,14 +27,43 @@ export function entryPoint(mainInstance: MainInstance): void {
     const exec = new PublisherProtocol('spawn',
         (publisherModel: InputPublisherModel) => new SpawnPublisher(publisherModel),
         {
-            onChildSpawned: [
-                'connected',
-                'signalCode',
-                'exitCode',
-                'killed',
-                'spawnfile',
-                'spawnargs',
-                'pid']
+            description: 'Enqueuer publisher to spawn child process',
+            homepage: 'https://github.com/enqueuer-land/enqueuer-plugin-shell',
+            libraryHomepage: 'https://nodejs.org/api/child_process.html#child_process_child_process_spawn_command_args_options',
+            schema: {
+                attributes: {
+                    command: {
+                        type: 'string',
+                        required: true
+                    },
+                    args: {
+                        // TODO fix it as soon as enqueuer allow list as type
+                        // type: 'list',
+                        type: 'string',
+                        defaultValue: [],
+                        required: false
+                    },
+                    options: {
+                        type: 'object',
+                        required: false
+                    },
+                },
+                hooks: {
+                    onChildSpawned: {
+                        description: 'Gets executed when child is spawned',
+                        arguments: {
+                            connected: {},
+                            signalCode: {},
+                            exitCode: {},
+                            killed: {},
+                            spawnfile: {},
+                            spawnargs: {},
+                            pid: {}
+                        }
+                    }
+                }
+
+            }
         }) as PublisherProtocol;
     mainInstance.protocolManager.addProtocol(exec);
 }

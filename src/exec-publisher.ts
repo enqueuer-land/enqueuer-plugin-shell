@@ -27,6 +27,38 @@ export class ExecPublisher extends Publisher {
 export function entryPoint(mainInstance: MainInstance): void {
     const exec = new PublisherProtocol('exec',
         (publisherModel: InputPublisherModel) => new ExecPublisher(publisherModel),
-        {onCommandExecuted: ['stdout', 'stderr', 'cmd', 'signal', 'code', 'killed', 'Error']}) as PublisherProtocol;
+        {
+            description: 'Enqueuer publisher to execute shell',
+            homepage: 'https://github.com/enqueuer-land/enqueuer-plugin-shell',
+            libraryHomepage: 'https://nodejs.org/api/child_process.html#child_process_child_process_exec_command_options_callback',
+            schema: {
+                attributes: {
+                    command: {
+                        type: 'string',
+                        required: true
+                    },
+                    options: {
+                        type: 'object',
+                        required: false
+                    },
+                },
+                hooks: {
+                    onCommandExecuted: {
+                        description: 'Gets executed when command is executed',
+                        arguments: {
+                            stdout: {},
+                            stderr: {},
+                            cmd: {},
+                            signal: {},
+                            code: {},
+                            killed: {},
+                            Error: {},
+                        }
+                    }
+                }
+
+            }
+        }) as PublisherProtocol;
+
     mainInstance.protocolManager.addProtocol(exec);
 }
