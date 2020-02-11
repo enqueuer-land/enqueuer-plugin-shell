@@ -31,12 +31,12 @@
   },
   "homepage": "https://github.com/enqueuer-land/enqueuer-plugin-shell#readme",
   "devDependencies": {
-    "@types/node": "^13.1.0",
+    "@types/node": "^13.7.1",
     "ts-node": "^8.6.2",
     "tslint": "^5.18.0",
     "typescript": "^3.5.2"
   },
   "dependencies": {
-    "enqueuer": "^5.0.0"
+    "enqueuer": "^5.0.4"
   }
 }
