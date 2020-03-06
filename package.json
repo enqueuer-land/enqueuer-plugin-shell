@@ -31,7 +31,7 @@
   },
   "homepage": "https://github.com/enqueuer-land/enqueuer-plugin-shell#readme",
   "devDependencies": {
-    "@types/node": "^13.7.4",
+    "@types/node": "^13.9.0",
     "ts-node": "^8.6.2",
     "tslint": "^5.18.0",
     "typescript": "^3.5.2"
