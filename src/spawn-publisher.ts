@@ -13,9 +13,11 @@ export class SpawnPublisher extends Publisher {
         this.options = publisher.options || {};
     }
 
-    public async publish(): Promise<void> {
+    public async publish(): Promise<any> {
         try {
-            this.executeHookEvent('onChildSpawned', await spawn(this.command, this.args, this.options));
+            const publishedResult = await spawn(this.command, this.args, this.options);
+            this.publishedResult('onChildSpawned', publishedResult);
+            return publishedResult;
         } catch (err) {
             this.executeHookEvent('onChildSpawned', err);
         }

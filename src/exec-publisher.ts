@@ -16,7 +16,9 @@ export class ExecPublisher extends Publisher {
 
     public async publish(): Promise<any> {
         try {
-            this.executeHookEvent('onCommandExecuted', await execPromisified(this.command, this.options));
+            const publishedResult = await execPromisified(this.command, this.options);
+            this.executeHookEvent('onCommandExecuted', publishedResult);
+            return publishedResult;
         } catch (err) {
             this.executeHookEvent('onCommandExecuted', err);
         }
