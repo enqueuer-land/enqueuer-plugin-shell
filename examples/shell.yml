@@ -1,19 +1,4 @@
 -   publishers:
-        -   type: spawn #https://nodejs.org/api/child_process.html#child_process_child_process_spawn_command_args_options
-            command: ls
-            args:
-                - -lh
-                - /usr
-            options:
-                detached: true
-            onChildSpawned:
-                assertions:
-                    -   expect: spawnargs
-                        toBeEqualTo: [ls,-lh,/usr]
-                    -   expect: spawnfile
-                        toBeEqualTo: `ls`
-                    -   expectToBeDefined: pid
--   publishers:
         -   type: exec #https://nodejs.org/api/child_process.html#child_process_child_process_exec_command_options_callback
             command: |-
                 echo exec works
